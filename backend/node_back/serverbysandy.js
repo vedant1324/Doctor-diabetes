@@ -21,9 +21,7 @@ app.use(express.json());
 
 app.get('/',function(req,res){
     const body1=req.body;
-
-    safeParse
-    
+   
 });
 
 

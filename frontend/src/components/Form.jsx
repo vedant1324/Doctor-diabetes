@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 const Form = () => {
   const [formData, setFormData] = useState({
     age: "",
@@ -13,7 +13,8 @@ const Form = () => {
     s5: "",
     s6: ""
   });
-
+ const [value,setValue]= useState("");
+ const [result,setResult]= useState("");
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -22,12 +23,24 @@ const Form = () => {
     });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Send formData to backend
-    console.log(formData); // Just for demonstration, you would send this data to your backend
-    alert("Form Submitted");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://localhost:5000/predict', {
+        data: formData
+      });
+      
+      console.log(response.data);
+      // Handle response data as needed
+      setResult(response.data.diabetes_status);
+      console.log(result);
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle error
+    }
   };
+
 
   return (
     <div className="m-6 flex flex-col justify-center items-center  gap-2 w-[700px]">
@@ -130,6 +143,9 @@ const Form = () => {
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
         />
       </form>
+
+      {result!=="" && <p>Result: { result}</p>}
+
     </div>
   );
 };
