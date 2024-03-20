@@ -11,7 +11,10 @@ function App() {
     <div className='bg-[#FEECE2] w-full h-full '>
      <Heading></Heading> 
      <About></About>
+     <div className='flex flex-col justify-center items-center '>
      <Form></Form>
+     </div>
+     
     </div>
   )
 }
